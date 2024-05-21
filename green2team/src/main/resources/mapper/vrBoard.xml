@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.dao.VrBoardDao">
+
+
+		<!-- 최근 게시물 3개 조회 -->
+	<select id="recentThreeVrSelect"
+		resultType="com.green.vo.VrBoardVo">
+		SELECT * FROM vrboardtbl ORDER BY vrRegdate DESC LIMIT 3
+	</select>
+
+	<!-- 페이징 - 리스트 -->
+	<select id="selectAllWithPage"
+		resultType="com.green.vo.VrBoardVo"
+		parameterType="com.green.vo.ConditionValue">
+		<![CDATA[
+        SELECT *
+        FROM (
+            SELECT vrBoardNo, vrBoardTitle, vrBoardContent, vrThumbnailImgUrl, vrPanoramaViewerUrl, vrViews, vrWriter, vrRegdate, vrUpdatedate,
+                    ROW_NUMBER() OVER (ORDER BY vrRegdate DESC) AS rn
+            FROM vrBoardTbl
+        ) AS sub
+        WHERE rn > ((#{pageNum} - 1) * #{amount})
+        LIMIT #{amount}
+        ]]>
+	</select>
+
+	<!-- 페이징 - 페이지 번호 -->
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(*) FROM
+		vrBoardTbl
+	</select>
+
+	<!-- 년도별 조회 - 리스트 -->
+	<select id="selectByYearWithPaging"
+		resultType="com.green.vo.VrBoardVo" parameterType="map">
+    <![CDATA[
+		SELECT vrBoardNo, vrBoardTitle, vrBoardContent, vrThumbnailImgUrl, vrPanoramaViewerUrl, vrViews, vrWriter, vrRegdate, vrUpdatedate
+		FROM vrBoardTbl
+		WHERE EXTRACT(YEAR FROM vrRegdate) = #{selectedYear}
+		ORDER BY vrRegdate DESC
+		OFFSET #{offset} ROWS
+		FETCH NEXT #{amount} ROWS ONLY
+    ]]>
+	</select>
+
+	<!-- 년도별 조회 - 페이지 번호 -->
+	<select id="selectTotalCountByYear" resultType="int"
+		parameterType="int">
+		SELECT COUNT(*) FROM vrBoardTbl WHERE EXTRACT(YEAR FROM
+		vrRegdate) = #{year}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 해당 게시물 상세 조회 -->
+	<select id="selectVrBoardByVrBoardNo" parameterType="long" resultType="com.green.vo.VrBoardVo">
+		select * from vrBoardtbl where VrBoardNo = #{VrBoardNo}
+	</select>
+	
+	
+	<!-- 해당 게시물 상세조회 조회수 카운트 -->
+	<update id="increaseViewsByVrBoardNo" parameterType="long" >
+	UPDATE vrBoardtbl SET vrViews = vrViews + 1 WHERE VrBoardNo = #{VrBoardNo}
+	</update>
+	
+	
+	
+
+	<!-- 검색 vr 테이블 출력 -->
+	<select id="selectByVrSearch" resultType="com.green.vo.VrBoardVo" parameterType="string">
+			SELECT * 
+			FROM vrboardtbl 
+			WHERE CONCAT(vrBoardTitle, ' ', vrBoardContent, ' ', vrWriter) LIKE '%' || #{searchText} || '%';
+	</select>
+	
+	
+	<!-- 게시물 저장 -->
+   <insert id="insertVrBoard" parameterType="com.green.vo.VrBoardVo" useGeneratedKeys="true" keyProperty="vrBoardNo">
+       INSERT INTO vrBoardTbl (vrBoardNo, vrBoardTitle, vrBoardContent, vrThumbnailImgUrl, 
+                               vrPanoramaViewerUrl, vrViews, vrWriter, vrRegdate, vrUpdatedate)
+       VALUES (nextval('vrBoard_seq'), #{vrBoardTitle}, #{vrBoardContent}, #{vrThumbnailImgUrl}, 
+               #{vrPanoramaViewerUrl}, 0, #{vrWriter}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+   </insert>
+   
+   <!-- VR 데이터 수정 -->
+   <update id="updateVrBoard" parameterType="com.green.vo.VrBoardVo">
+    <![CDATA[
+    UPDATE vrBoardTbl
+    SET vrBoardTitle = #{vrBoardTitle},
+        vrBoardContent = #{vrBoardContent},
+        vrThumbnailImgUrl = #{vrThumbnailImgUrl},
+        vrPanoramaViewerUrl = #{vrPanoramaViewerUrl},
+        vrWriter = #{vrWriter},
+        vrUpdatedate = CURRENT_TIMESTAMP
+    WHERE vrBoardNo = #{vrBoardNo}
+    ]]>
+   </update>
+   
+	   <!--  VR 게시물 삭제  -->
+	<delete id="deleteVr" parameterType="long"> 
+	DELETE FROM vrBoardTbl WHERE vrBoardNo = #{vrBoardNo} 
+	</delete>
+	
+	
+</mapper>

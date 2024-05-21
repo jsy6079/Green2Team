@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.dao.UserDao">
+
+
+	<!-- 페이징 - 리스트 -->
+	<select id="selectAllWithPage"
+		resultType="com.green.vo.UserVo"
+		parameterType="com.green.vo.ConditionValue">
+		<![CDATA[
+	        SELECT *
+        FROM (
+            SELECT id, role, username, email, join_date,
+                    ROW_NUMBER() OVER (ORDER BY id ASC) AS rn
+            FROM userentity
+        ) AS sub
+        WHERE rn > ((#{pageNum} - 1) * #{amount})
+        LIMIT #{amount}
+        ]]>
+	</select>
+
+	<!-- 페이징 - 페이지 번호 -->
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(*) FROM
+		userentity
+	</select>
+	
+	<select id="selectSearchTotalCount" parameterType="java.util.Map" resultType="int">
+	    SELECT COUNT(*) FROM userentity WHERE username LIKE CONCAT('%', #{searchText}, '%') OR email LIKE CONCAT('%', #{searchText}, '%')
+	</select>
+
+	<!-- 해당 회원 상세 조회 -->
+	<select id="selectUserById" parameterType="long" resultType="com.green.vo.UserVo">
+		select * from userentity where id = #{id}
+	</select>
+	
+	
+	<!-- 회원 수정 -->
+	<update id="updateUser" parameterType="com.green.vo.UserVo" >
+		UPDATE userentity
+		SET id = #{id},
+			username = #{username},
+			email = #{email},
+			join_date = #{join_date},
+			role = #{role}
+		WHERE id = #{id}
+	</update>
+	
+
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteUser" parameterType="long">
+		DELETE FROM userentity WHERE id = #{id}
+	</delete>
+	
+	<!-- 페이징 - 검색결과 리스트 -->
+	<select id="selectAllWithPageSearch"
+	    resultType="com.green.vo.UserVo"
+	    parameterType="map">
+	    <![CDATA[
+	    SELECT *
+	    FROM (
+	        SELECT id, role, username, email, join_date,
+	               ROW_NUMBER() OVER (ORDER BY id ASC) AS rn
+	        FROM userentity
+	        WHERE CONCAT(email, ' ', username) LIKE '%' || #{searchText} || '%'
+	    ) AS sub
+	    WHERE rn > ((#{cv.pageNum} - 1) * #{cv.amount})
+	    LIMIT #{cv.amount}
+	    ]]>
+	</select> 
+	
+
+
+			
+
+				
+
+</mapper>

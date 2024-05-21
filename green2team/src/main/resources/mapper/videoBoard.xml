@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.dao.VideoBoardDao">
+
+
+		<!-- 최근 게시물 3개 조회 -->
+	<select id="recentThreeVideoSelect"
+		resultType="com.green.vo.VideoBoardVo">
+		SELECT * FROM videoboardtbl ORDER BY videoRegdate DESC LIMIT 3
+	</select>
+
+	<!-- 페이징 - 리스트 -->
+	<select id="selectAllWithPage"
+		resultType="com.green.vo.VideoBoardVo"
+		parameterType="com.green.vo.ConditionValue">
+		<![CDATA[
+        SELECT *
+        FROM (
+            SELECT videoBoardNo, videoBoardTitle, videoBoardContent, videoThumbnailImgUrl, videoViewerUrl, videoViews, videoWriter, videoRegdate, videoUpdatedate,
+                    ROW_NUMBER() OVER (ORDER BY videoRegdate DESC) AS rn
+            FROM videoBoardTbl
+        ) AS sub
+        WHERE rn > (#{pageNum} - 1) * 8
+        LIMIT 8
+        ]]>
+	</select>
+
+	<!-- 페이징 - 페이지 번호 -->
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(*) FROM
+		videoBoardTbl
+	</select>
+
+
+
+	
+	<!-- 검색 video 테이블 출력 -->
+	<select id="selectByVideoSearch" resultType="com.green.vo.VideoBoardVo" parameterType="string">
+			SELECT * 
+			FROM videoboardtbl 
+			WHERE CONCAT(videoBoardTitle, ' ', videoBoardContent, ' ', videoWriter) LIKE '%' || #{searchText} || '%';
+	</select>
+	
+	
+	
+	
+	
+	<!-- 해당 게시물 상세조회 -->
+	<select id="selectVideoBoardByVideoBoardNo" parameterType="long" resultType="com.green.vo.VideoBoardVo">
+		select * from videoboardtbl where videoBoardNo = #{videoBoardNo}
+	</select>
+	
+	<!-- 해당 게시물 상세조회 조회수 카운트 -->
+	<update id="increaseViewsByVideoBoardNo" parameterType="long" >
+	UPDATE videoboardtbl SET videoViews = videoViews + 1 WHERE videoBoardNo = #{videoBoardNo}
+	</update>
+	
+	
+		<!-- 게시물 저장 -->
+	<insert id="insertVideoBoard" parameterType="com.green.vo.VideoBoardVo" useGeneratedKeys="true" keyProperty="videoBoardNo">
+    	INSERT INTO videoBoardTbl (videoBoardNo, videoBoardTitle, videoBoardContent, videoThumbnailImgUrl, 
+        	                    videoViewerUrl, videoViews, videoWriter, videoRegdate, videoUpdatedate)
+    	VALUES (nextval('videoBoard_seq'), #{videoBoardTitle}, #{videoBoardContent}, #{videoThumbnailImgUrl}, 
+        	    #{videoViewerUrl}, 0, #{videoWriter}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	</insert>
+	
+	<!-- Video 글 수정 -->
+	<update id="updateVideoBoard" parameterType="com.green.vo.VideoBoardVo">
+    <![CDATA[
+    UPDATE videoBoardTbl
+    SET videoBoardTitle = #{videoBoardTitle},
+        videoBoardContent = #{videoBoardContent},
+        videoThumbnailImgUrl = #{videoThumbnailImgUrl},
+        videoViewerUrl = #{videoViewerUrl},
+        videoWriter = #{videoWriter},
+        videoUpdatedate = CURRENT_TIMESTAMP
+    WHERE videoBoardNo = #{videoBoardNo}
+    ]]>
+	</update>
+	
+	<!--  게시물 삭제  -->
+	<delete id="deleteVideo" parameterType="long"> 
+	DELETE FROM videoBoardTbl WHERE videoBoardNo = #{videoBoardNo} 
+	</delete>
+	
+
+</mapper>
+
