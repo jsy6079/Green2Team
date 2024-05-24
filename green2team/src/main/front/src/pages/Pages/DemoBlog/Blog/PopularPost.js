@@ -46,13 +46,13 @@ export default class PopularPost extends Component {
   handleScroll = () => {
     const scrollTop = window.pageYOffset;
   
-    // 예를 들어, 스크롤이 일정 위치에 도달했을 때 특정 작업을 수행한다고 가정합니다.
+    // 예를 들어, 스크롤이 일정 위치에 도달했을 때 특정 작업을 수행한다고 가정
     if (scrollTop > 200) {
-      // 스크롤이 일정 위치 이상으로 내려갔을 때 특정 클래스를 추가하거나 스타일을 변경하는 등의 작업을 수행합니다.
+      // 스크롤이 일정 위치 이상으로 내려갔을 때 특정 클래스를 추가하거나 스타일을 변경하는 등의 작업을 수행
       // 예시:
       // document.getElementById('some-element').classList.add('scrolled-down');
     } else {
-      // 스크롤이 일정 위치 이하로 올라갔을 때 특정 클래스를 제거하거나 스타일을 초기화하는 등의 작업을 수행합니다.
+      // 스크롤이 일정 위치 이하로 올라갔을 때 특정 클래스를 제거하거나 스타일을 초기화하는 등의 작업을 수행
       // 예시:
       // document.getElementById('some-element').classList.remove('scrolled-down');
     }

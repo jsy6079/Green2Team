@@ -114,27 +114,6 @@ const ImageSlider = () => {
       <Container fluid>
         <Row>
           <Col className="col-12 px-0">
-            {/* <Slider {...settings} className="tiny-twelve-item">
-            {imageSliderData.map((item, key) => (
-              <div key={key} className="tiny-slide">
-                <div className="work-container work-primary work-modern position-relative d-block client-testi rounded-0 overflow-hidden" style={{marginBottom: "-7px"}}>
-                  <div className="card-img position-relative">
-                    <img src={item.img} className="img-fluid" alt="" />
-                    <div className="card-overlay"></div>
-
-                    <div className="icons text-center">
-                      <Link to="#" className="work-icon bg-white d-inline-block rounded-pill lightbox">
-                        <i onClick={() => { setisGallery(true); setphotoIndex(item.imgIndex)}} className="uil uil-instagram"></i></Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}     
-            </Slider> */}
-
-            {/* <div className="position-absolute top-50 start-50 translate-middle d-md-block d-none">
-              <Link to="#" className="btn btn-sm btn-primary text-uppercase">Follow Now</Link>
-            </div> */}
           </Col>
         </Row>
       </Container>

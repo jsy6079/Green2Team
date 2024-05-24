@@ -18,36 +18,6 @@ export default class AllBlog extends Component {
     super(props);
     this.state = {
       blogs: [
-        // {
-        //   id: 1,
-        //   image: blog1,
-        //   title: "안녕",
-        // },
-        // {
-        //   id: 2,
-        //   image: blog2,
-        //   title: "How apps is changing the IT world",
-        // },
-        // {
-        //   id: 3,
-        //   image: blog3,
-        //   title: "Smartest Applications for Business",
-        // },
-        // {
-        //   id: 4,
-        //   image: blog4,
-        //   title: "How apps is changing the IT world",
-        // },
-        // {
-        //   id: 5,
-        //   image: blog5,
-        //   title: "Design your apps in your own way",
-        // },
-        // {
-        //   id: 6,
-        //   image: blog6,
-        //   title: "Smartest Applications for Business",
-        // },
       ],
     };
   }
@@ -57,17 +27,6 @@ export default class AllBlog extends Component {
         <Container className="mt-100 mt-60">
           <Row className="align-items-center mb-4 pb-2">
             <Col md={8}>
-              {/* <div className="section-title text-center text-md-start"> */}
-                {/* <h4 className="mb-4">All News or Blog Post</h4> */}
-                {/* <p className="text-muted mb-0 para-desc">
-                  Start working with{" "}
-                  <span className="text-primary fw-bold">
-                    Landrick
-                  </span>{" "}
-                  that can provide everything you need to generate awareness,
-                  drive traffic, connect.
-                </p> */}
-              {/* </div> */}
             </Col>
           </Row>
           <Row>
@@ -117,16 +76,6 @@ export default class AllBlog extends Component {
                 </Card>
               </Col>
             ))}
-            {/* <Col xs={12} className="mt-4 pt-2">
-              <div className="text-center">
-                <Link to="#" className="btn btn-primary">
-                  See More{" "}
-                  <i>
-                    <FeatherIcon icon="arrow-right" className="fea icon-sm" />
-                  </i>
-                </Link>
-              </div>
-            </Col> */}
           </Row>
         </Container>
       </React.Fragment>

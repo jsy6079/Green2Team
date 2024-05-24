@@ -123,31 +123,6 @@ class PageProfile extends Component {
         }
     };
     
-
-    // 데이터 가져오는 fetchData 메서드
-    // fetchData = (page, searchText) => {
-    //     let url = `http://localhost:8080/page-profile/List?pageNum=${page}&amount=10`;
-    //     if (searchText) {
-    //         url = `http://localhost:8080/page-profile-search?searchText=${searchText}&pageNum=${page}&amount=10`;
-    //     }
-    //     fetch(url)
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             const total = data.total;
-    //             const totalPages = Math.ceil(data.page.total / 10);
-    //             this.setState({
-    //                 blogs: data.userLists,
-    //                 pageSize: 10,
-    //                 totalPages: totalPages,
-    //                 currentPage: page,
-    //             });
-    //             console.log(total);
-    //         })
-    //         .catch((error) => {
-    //             console.error('데이터 가져오기 오류:', error);
-    //         });
-    // };
-    
     // 검색을 안했을 때의 데이터를 가져오는 fetchData
     fetchDataWithoutSearch = (page) => {
         const url = `http://localhost:8080/page-profile/List?pageNum=${page}&amount=10`;

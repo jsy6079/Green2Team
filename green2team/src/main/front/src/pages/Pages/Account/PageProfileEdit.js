@@ -94,29 +94,33 @@ const PageProfileEdit = () => {
     
 // 수정 버튼 클릭 시 실행되는 함수
     function handleFormSubmit(event) {
-        event.preventDefault(); // 폼의 기본 동작을 방지합니다.
+        event.preventDefault(); // 폼의 기본 동작을 방지
     
         // 폼 데이터를 가져옵니다.
         const formData = new FormData(event.target);
+
+        // 선택된 라디오 버튼을 가져옴
+        const selectedRadioButton = document.querySelector('input[name="role"]:checked');
+        
+        // 라디오 버튼이 선택되지 않은 경우
+        if (!selectedRadioButton) {
+            alert('권한을 선택해주세요.');
+            return;
+        }
     
-        // 권한 설정 라디오 버튼의 값을 가져와서 FormData에 추가합니다.
+        // 권한 설정 라디오 버튼의 값을 가져와서 FormData에 추가
         const selectedRole = document.querySelector('input[name="role"]:checked').value;
         console.log(selectedRole);
         formData.append('role', selectedRole);
     
-        // FormData를 JSON 형식으로 변환합니다.
+        // FormData를 JSON 형식으로 변환
         const jsonData = {};
         formData.forEach((value, key) => {
             jsonData[key] = value;
         });
 
-        // if (jsonData.role === "ROLE_ADMIN") {
-        //     // 여기에서 경고 메시지를 표시하거나 원하는 처리를 수행할 수 있습니다.
-        //     alert("이미 최고 관리자가 존재합니다.");
-        //     return; // 요청 중지
-        // }
     
-        // axios를 사용하여 서버에 데이터를 전송합니다.
+        // axios를 사용하여 서버에 데이터를 전송
 
         if(selectedRole==='ROLE_ADMIN'){
             axios.put('/api/updateRoleAdmin', jsonData)
@@ -428,15 +432,6 @@ const PageProfileEdit = () => {
                                                         </div>
                                                     </div> 
                                                 </div>
-                                                {/* <div className="col-lg-12">
-                                                    <div className="mb-3">
-                                                        <label className="form-label">Description</label>
-                                                        <div className="form-icon position-relative">
-                                                            <i data-feather="message-circle" className="fea icon-sm icons"></i>
-                                                            <textarea name="comments" id="comments" rows="4" className="form-control ps-5" placeholder="Description :"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div> */}
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-12">
@@ -490,45 +485,7 @@ const PageProfileEdit = () => {
                             </div>
                         </div>
                     </div>
-                                {/* <div className="card border-0 rounded shadow p-4">
-                                    <h5 className="mb-0">권한 설정</h5>
-        
-                                    <div className="mt-4">
-                                        <div className="d-flex justify-content-between pb-4">
-                                            <h6 className="mb-0">일반 사용자</h6>
-                                            <p>게시글 조회 가능 (대시보드 접근 불가)</p>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="noti5"/>
-                                                <label className="form-check-label" htmlFor="noti5"></label>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between py-4 border-top">
-                                            <h6 className="mb-0">상인 사용자</h6>
-                                            <p>상인 게시판 및 쿠폰 발급 관리</p>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="noti6"/>
-                                                <label className="form-check-label" htmlFor="noti6"></label>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between py-4 border-top">
-                                            <h6 className="mb-0">준 관리자</h6>
-                                            <p>모든 게시판 관리</p>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value=""  id="noti7"/>
-                                                <label className="form-check-label" htmlFor="noti7"></label>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between py-4 border-top">
-                                            <h6 className="mb-0">최고 관리자</h6>
-                                            <p>모든 게시물 및 계정 권한 관리</p>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" checked id="noti8"/>
-                                                <label className="form-check-label" htmlFor="noti8"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-        
+       
                                 <div className="card border-0 rounded shadow p-4 mt-4">
                                     <h5 className="mb-0 text-danger">계정 삭제하기</h5>
         

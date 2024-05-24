@@ -21,6 +21,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	@Query("SELECT COUNT(u) > 0 FROM UserEntity u WHERE u.email = :email")
 	boolean existsByEmail(String email);
 	
+	// 로그인시 아이디 검사
+	@Query("SELECT u FROM UserEntity u WHERE u.username = :username")
+	UserEntity findByUsername(String username);
+	
 	// 이메일 인증 여부
 	@Query("SELECT COUNT(u) > 0 FROM UserEntity u WHERE u.email = :email AND u.emailAuth = true")
 	boolean checkEmailAuth(String email);
@@ -29,9 +33,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	@Query("SELECT u FROM UserEntity u WHERE u.email = :email")
 	UserEntity findByEmail(String email);
 	
-	// 로그인시 아이디 검사
-	@Query("SELECT u FROM UserEntity u WHERE u.username = :username")
-	UserEntity findByUsername(String username);
+
 	
 	@Modifying
     @Query("UPDATE UserEntity u SET u.password = :newPassword WHERE u.email = :email")

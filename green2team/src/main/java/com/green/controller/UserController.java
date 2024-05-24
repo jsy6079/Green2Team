@@ -49,29 +49,24 @@ public class UserController {
 	//회원 상세보기
 	@GetMapping("/page-profile-edit/{id}")
 	public UserVo getVrBoardDetail(@PathVariable("id") Long id) {
-
-	
 		UserVo userVo = userService.get(id);
-		
 	    return userVo;
 	}
 	
-	
-	// 회원 수정
+	// 회원 수정 중 라디오 버튼에서 관리자를 선택할때
 	@PutMapping("/api/updateRoleAdmin")
 	public Map<String, Object> updateProfileAdmin(@RequestBody UserVo userVo) {
 		Map<String, Object> response = new HashMap<>();
+		
 		if(userRepository.existsByUserRole("ROLE_ADMIN")) {
 			response.put("userRole", '1');
 		} else {
 			userService.modify(userVo);
 		}
-		
 		return response;
-		
 	}
 	
-	
+	// 회원 수정 중 라디오 버튼에서 그 이외 값을 선택할때
 	@PutMapping("/api/updateRole")
 	public void updateProfile(@RequestBody UserVo userVo) {
 			userService.modify(userVo);
@@ -90,7 +85,7 @@ public class UserController {
                                                    @RequestParam("pageNum") int pageNum,
                                                    @RequestParam("amount") int amount){
     	
-    	System.out.println("하이2222222");
+
 
         Map<String, Object> parameterMap = new HashMap<>();
         ConditionValue cv = new ConditionValue(pageNum, amount); // 페이지네이션 정보 생성

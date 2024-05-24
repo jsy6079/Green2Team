@@ -10,6 +10,8 @@ function AllCases() {
   const { searchText } = useParams();
   // const history = useHistory();
 
+
+  // 게시글 검색
   useEffect(() => {
     axios.get(`/page-all-cases-search/${searchText}`)
       .then(response => {

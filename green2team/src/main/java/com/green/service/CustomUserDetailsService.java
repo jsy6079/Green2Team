@@ -17,13 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-	// 시큐리티 로그인 서비스는 여기에 따로 만들거임
+	// 시큐리티 로그인 서비스
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	
-	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, EmailAuthUncertifiedException {

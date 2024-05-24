@@ -11,10 +11,8 @@ import PageRecoveryPassword from "../pages/Pages/AuthPages/PageRecoveryPassword"
 // 대시보드
 import PageProfile from "../pages/Pages/Account/PageProfile";
 import PageProfileEdit from "../pages/Pages/Account/PageProfileEdit";
-import PageMembers from "../pages/Pages/Account/PageMembers"; 
 import PageWorks1 from "../pages/Pages/Account/PageWorks1";
 import PageWorks2 from "../pages/Pages/Account/PageWorks2";
-import PageMessages from "../pages/Pages/Account/PageMessages"; 
 import PagePayments from "../pages/Pages/Account/PagePayments";
 import PageInvoice from "../pages/Pages/Account/PageInvoice";
 import PageChat from "../pages/Pages/Account/PageChat";
@@ -58,10 +56,8 @@ const routes = [
 
   //Page Profile
   { path: "/page-profile", component: <PageProfile />,requiredRole:['ROLE_ADMIN']},
-  { path: "/page-members", component: <PageMembers />, },
   { path: "/page-works1/:vrBoardNo", component: <PageWorks1 />,requiredRole:['ROLE_ADMIN','ROLE_BOARD','ROLE_TRADER']  },
   { path: "/page-works2/:videoBoardNo", component: <PageWorks2 />,requiredRole:['ROLE_ADMIN','ROLE_BOARD','ROLE_TRADER'] },
-  { path: "/page-messages", component: <PageMessages />, },
   { path: "/page-profile-edit/:id", component: <PageProfileEdit />,requiredRole:['ROLE_ADMIN']},
   { path: "/page-payments", component: <PagePayments />,requiredRole:['ROLE_ADMIN','ROLE_BOARD','ROLE_TRADER'] },
   { path: "/page-invoice", component: <PageInvoice />, isTopbarDark: true,requiredRole:['ROLE_ADMIN','ROLE_BOARD','ROLE_TRADER'] },

@@ -71,7 +71,7 @@ public class joinController {
 	}
     
     
-    @PostMapping("/api/email") // 회원가입 id 중복체크
+    @PostMapping("/api/email") // 회원가입 email 중복체크
 	public ResponseEntity<Map<String, Object>> chkEmail(@RequestBody Map<String, String> requestBody) throws AuthChkFalseException, AuthChkTrueException{
 		String email = requestBody.get("email");
     	System.out.println(email);
